@@ -1,31 +1,27 @@
-# PDC Protocol Verify
+# PDC — llms.txt Enhanced for Hexo
 
-PDC（Parallel Data Channel Protocol，平行数据通道协议）的协议规范、采用者网络入口和验证工具。
+PDC（Parallel Data Channel）是 [llms.txt](https://llmstxt.org) 标准的 Hexo 增强实现，包含协议规范、采用者网络入口和验证工具。
 
-## 什么是 PDC 协议
+## 什么是 PDC
 
-PDC 协议让静态博客（Hexo / Hugo / Jekyll 等）在构建时自动生成 AI 可读的零噪音内容端点，使 AI/Agent 能直接获取结构化文章数据，无需解析 HTML 噪音。
+[llms.txt](https://llmstxt.org) 是由 Jeremy Howard（fast.ai）提出的标准，定义了 `/llms.txt` 文件格式，让网站为 LLM 提供 Markdown 友好的内容概览。PDC 在完全兼容 llms.txt 的基础上，为 Hexo 博客扩展了：
 
-核心端点：
-
-| 端点 | 用途 |
-|------|------|
-| `/llms.txt` | AI 入口，站点概览 + 文章索引 |
-| `/api/index.json` | 结构化文章列表 |
-| `/api/posts/<slug>.json` | 单篇 JSON（元数据 + 正文） |
-| `/api/posts/<slug>.md` | 单篇纯 Markdown（零噪音） |
-| `/api/categories/<slug>.json` | 按分类聚合 |
-| `/api/adopters.json` | PDC 采用者列表 |
+- 结构化文章索引（`/api/index.json`，含 tags/categories/description）
+- 单篇纯 Markdown 正文（`/api/posts/<slug>.md`，零噪音）
+- 按分类聚合（`/api/categories/<slug>.json`）
+- 加密文章保护（AI 知道存在但不泄露正文）
+- MCP 适配层（可选，接入 Claude Desktop / Cursor 等）
+- 采用者互链网络（`/api/adopters.json`）
 
 完整规范见 [`pdc-protocol.md`](./pdc-protocol.md)。
 
-## 如何加入 PDC 采用者网络
+## 如何加入 llms.txt 采用者网络
 
-### 1. 实现 PDC 协议
+### 1. 实现 llms.txt + PDC 扩展端点
 
 参照 [`pdc-protocol.md`](./pdc-protocol.md)，在你的静态站点上实现以下端点：
 
-- `/llms.txt` — 站点概览 + 文章列表
+- `/llms.txt` — 站点概览 + 文章列表（llms.txt 标准格式）
 - `/api/index.json` — 结构化文章索引
 - `/api/posts/<slug>.md` — 单篇纯 Markdown
 
@@ -92,16 +88,16 @@ node verify.js
 
 - 出现在友链页面，获得反向链接
 - 列入 `/api/adopters.json`，其他 AI/Agent 可发现你的站点
-- PDC 网络成员之间形成内容互链，提升整体搜索可见性
+- 网络成员之间形成内容互链，提升整体搜索可见性
 
 ### 义务
 
-- 维持 PDC 端点可访问
-- 在站点可见位置标注 PDC 协议采用（如关于页或页脚）
+- 维持 llms.txt 端点可访问
+- 在站点可见位置标注 llms.txt 采用（如关于页或页脚）
 
 ## 参考实现
 
-- [Q's blog](https://bsheepcoder.github.io/) — PDC 协议发源地，Hexo + Butterfly 主题
+- [Q's blog](https://bsheepcoder.github.io/) — PDC 参考实现，Hexo + Butterfly 主题
 
 ## License
 
